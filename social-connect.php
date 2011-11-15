@@ -194,7 +194,7 @@ function sc_social_connect_process_login( $is_ajax = false ){
 function sc_get_unique_username($user_login, $c = 1) {
 	if ( username_exists( $user_login ) ) {
 		if ($c > 5)
-			$append = '_'.substr(md5($user_login),0,3) . $c;
+			$append = '_'.substr(uniqid(),-3);
 		else
 			$append = $c;
 		
