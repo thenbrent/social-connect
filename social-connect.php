@@ -170,7 +170,7 @@ License: GPL2
 			}
 		}
 		
-		$file                = preg_replace('/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR."/$2", __FILE__);
+		$file               = preg_replace('/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR."/$2", __FILE__);
 		$this_plugin        = plugin_basename(trim($file));
 		$active_plugins     = get_option('active_plugins');
 		$key                = array_search($this_plugin, $active_plugins);
