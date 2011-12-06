@@ -10,9 +10,9 @@ class SC_Widget extends WP_Widget
 	function __construct()
 	{
 		parent::WP_Widget(
-			'social_connect', 	//unique id
-			'Social Connect', 	//title displayed at admin panel
-			array( 				//Additional parameters
+			'social_connect',   //unique id
+			'Social Connect',   //title displayed at admin panel
+			array(              //Additional parameters
 				'description' => __( 'Login or register with Facebook, Twitter, Yahoo, Google or a Wordpress.com account', 'social_connect' )
 			)
 		);
@@ -54,11 +54,11 @@ class SC_Widget extends WP_Widget
 	/** Everything which should happen when user edit widget at admin panel */
 	function update( $new_instance, $old_instance )
 	{
-		$instance 							= $old_instance;
-		$instance['title'] 					= strip_tags( $new_instance['title'] );
-		$instance['before_widget_content'] 	= $new_instance['before_widget_content'];
-		$instance['after_widget_content'] 	= $new_instance['after_widget_content'];
-		$instance['hide_for_logged_in'] 	= $new_instance['hide_for_logged_in'];
+		$instance                           = $old_instance;
+		$instance['title']                  = strip_tags( $new_instance['title'] );
+		$instance['before_widget_content']  = $new_instance['before_widget_content'];
+		$instance['after_widget_content']   = $new_instance['after_widget_content'];
+		$instance['hide_for_logged_in']     = $new_instance['hide_for_logged_in'];
 
 		return $instance;
 	}

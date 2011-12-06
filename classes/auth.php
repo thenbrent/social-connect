@@ -5,9 +5,9 @@ class SC_Auth {
 	static function ajax_login()
 	{
 		if (
-			isset( $_POST[ 'login_submit' ] ) 	AND
-			$_POST[ 'login_submit' ] == 'ajax' 	AND
-			isset( $_POST[ 'action' ] ) 		AND
+			isset( $_POST[ 'login_submit' ] )   AND
+			$_POST[ 'login_submit' ] == 'ajax'  AND
+			isset( $_POST[ 'action' ] )         AND
 			$_POST[ 'action' ] == 'social_connect'
 		)
 		{
@@ -19,8 +19,8 @@ class SC_Auth {
 	{
 		$redirect_to = SC_Utils::redirect_to();
 	
-		$social_connect_provider 	= $_REQUEST[ 'social_connect_provider' ];
-		$provider_identity_key 		= 'social_connect_' . $social_connect_provider . '_id';
+		$social_connect_provider    = $_REQUEST[ 'social_connect_provider' ];
+		$provider_identity_key      = 'social_connect_' . $social_connect_provider . '_id';
 		
 		if ( ! $gateway = SC_Utils::load_gateway($social_connect_provider))
 		{
@@ -29,11 +29,11 @@ class SC_Auth {
 		
 		// Cookies used to display welcome message if already signed in recently using some provider
 		setcookie(
-			"social_connect_current_provider",	// name
-			$social_connect_provider,			// value
-			time()+3600,						// expire
-			SITECOOKIEPATH,						// path
-			COOKIE_DOMAIN 						// domain 
+			"social_connect_current_provider",  // name
+			$social_connect_provider,           // value
+			time()+3600,                        // expire
+			SITECOOKIEPATH,                     // path
+			COOKIE_DOMAIN                       // domain 
 		);
 		
 		$data 		= call_user_func(array($gateway->class,'process_login'));
@@ -57,12 +57,12 @@ class SC_Auth {
 			$user_login = static::get_unique_username($data->user_login);
 	
 			$user_create = array(
-				'user_login' 	=> $user_login,
-				'user_email' 	=> $data->email,
-				'first_name' 	=> $data->first_name,
-				'last_name' 	=> $data->last_name,
-				'user_url' 		=> $data->profile_url,
-				'user_pass' 	=> wp_generate_password()
+				'user_login'    => $user_login,
+				'user_email'    => $data->email,
+				'first_name'     => $data->first_name,
+				'last_name'     => $data->last_name,
+				'user_url'      => $data->profile_url,
+				'user_pass'     => wp_generate_password()
 			);
 	
 			// Create a new user

@@ -53,38 +53,38 @@ License: GPL2
 	{
 		register_activation_hook( __FILE__, array('Social_connect','hook_activate') );
 		
-		add_action( 'init', 					array('Social_connect', 'add_localization'), -1000 );
+		add_action( 'init',                     array('Social_connect', 'add_localization'), -1000 );
 			
-		add_action( 'login_head', 				array('Social_connect', 'add_stylesheets') );
-		add_action( 'wp_head', 					array('Social_connect', 'add_stylesheets') );
+		add_action( 'login_head',               array('Social_connect', 'add_stylesheets') );
+		add_action( 'wp_head',                  array('Social_connect', 'add_stylesheets') );
 			
-		add_action( 'admin_print_styles', 		array('Social_connect', 'add_admin_stylesheets') );
+		add_action( 'admin_print_styles',       array('Social_connect', 'add_admin_stylesheets') );
 			
-		add_action( 'login_head', 				array('Social_connect', 'add_javascripts') );
-		add_action( 'wp_head', 					array('Social_connect', 'add_javascripts') );
+		add_action( 'login_head',               array('Social_connect', 'add_javascripts') );
+		add_action( 'wp_head',                  array('Social_connect', 'add_javascripts') );
 		
-		add_action( 'login_form',          		array('SC_UI', 'render_login_form') );
-		add_action( 'register_form',       		array('SC_UI', 'render_login_form') );
-		add_action( 'after_signup_form',   		array('SC_UI', 'render_login_form') );
-		add_action( 'social_connect_form', 		array('SC_UI', 'render_login_form') );
+		add_action( 'login_form',               array('SC_UI', 'render_login_form') );
+		add_action( 'register_form',            array('SC_UI', 'render_login_form') );
+		add_action( 'after_signup_form',        array('SC_UI', 'render_login_form') );
+		add_action( 'social_connect_form',      array('SC_UI', 'render_login_form') );
 		
-		add_action( 'comment_post', 			array('SC_UI', 'add_comment_meta') );
+		add_action( 'comment_post',             array('SC_UI', 'add_comment_meta') );
 		
-		add_action( 'get_comment_author_link', 	array('SC_UI', 'render_comment_meta') );
+		add_action( 'get_comment_author_link',  array('SC_UI', 'render_comment_meta') );
 		
-		add_action( 'comment_form_top', 		array('SC_UI', 'render_comment_form') );
+		add_action( 'comment_form_top',         array('SC_UI', 'render_comment_form') );
 		
-		add_action( 'wp_footer', 				array('SC_UI', 'render_login_page_uri') );
+		add_action( 'wp_footer',                array('SC_UI', 'render_login_page_uri') );
 		
-		add_shortcode( 'social_connect', 		array('SC_UI', 'shortcode_handler') );
+		add_shortcode( 'social_connect',        array('SC_UI', 'shortcode_handler') );
 		
-		add_action( 'widgets_init', 			create_function( '', 'return register_widget( "SC_Widget" );' ));
+		add_action( 'widgets_init',             create_function( '', 'return register_widget( "SC_Widget" );' ));
 		
 		add_action( 'login_form_social_connect',array('SC_Auth', 'process_login') );
 		
-		add_action( 'init', 					array('SC_Auth', 'ajax_login') );
+		add_action( 'init',                     array('SC_Auth', 'ajax_login') );
 		
-		add_action('admin_menu', 				array('SC_Admin', 'add_options_page') );
+		add_action('admin_menu',                array('SC_Admin', 'add_options_page') );
 	}
 	
 	function add_localization()
@@ -170,10 +170,10 @@ License: GPL2
 			}
 		}
 		
-		$file 				= preg_replace('/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR."/$2", __FILE__);
-		$this_plugin 		= plugin_basename(trim($file));
-		$active_plugins 	= get_option('active_plugins');
-		$key 				= array_search($this_plugin, $active_plugins);
+		$file                = preg_replace('/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR."/$2", __FILE__);
+		$this_plugin        = plugin_basename(trim($file));
+		$active_plugins     = get_option('active_plugins');
+		$key                = array_search($this_plugin, $active_plugins);
 		
 		if ($key) // if it's 0 it's the first plugin already, no need to continue
 		{ 

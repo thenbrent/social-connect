@@ -74,10 +74,10 @@ class SC_Utils {
 		$gateway = strtolower($gateway);
 		
 		$gateway = (object) array(
-			'gateway' 	=> trim($gateway),
-			'plugin'	=> 'sc-gateway-' . $gateway . '/sc-gateway-' . $gateway . '.php',
-			'file' 		=> SOCIAL_CONNECT_PLUGIN_PATH . '/../sc-gateway-' . $gateway . '/sc-gateway-' . $gateway . '.php',
-			'class' 	=> 'SC_Gateway_' . ucfirst($gateway)
+			'gateway'   => trim($gateway),
+			'plugin'    => 'sc-gateway-' . $gateway . '/sc-gateway-' . $gateway . '.php',
+			'file'       => SOCIAL_CONNECT_PLUGIN_PATH . '/../sc-gateway-' . $gateway . '/sc-gateway-' . $gateway . '.php',
+			'class'     => 'SC_Gateway_' . ucfirst($gateway)
 		);
 		
 		$ap = (array) get_option( 'active_plugins', array() );
