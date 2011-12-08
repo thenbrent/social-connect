@@ -17,6 +17,7 @@ class Social_connect {
 	
 	/**
 	 * Init, static class constructor
+	 * 
 	 * @returns	void 
 	 */
 	static function init()
@@ -43,6 +44,7 @@ class Social_connect {
 	
 	/**
 	 * Define plugin constants
+	 * 
 	 * @returns	void
 	 */
 	function add_constants()
