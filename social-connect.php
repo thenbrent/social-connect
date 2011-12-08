@@ -9,8 +9,16 @@ Author URI: http://wordpress.org/extend/plugins/social-connect/
 License: GPL2
  */
 
- class Social_connect {
+/**
+ * Main Social Connect class
+ * Centralizes the hooks and dependencies, all actual logic should be in sub classes
+ */
+class Social_connect {
 	
+	/**
+	 * Init, static class constructor
+	 * @returns	void 
+	 */
 	static function init()
 	{
 		static::add_constants();
@@ -33,6 +41,10 @@ License: GPL2
 		}
 	}
 	
+	/**
+	 * Define plugin constants
+	 * @returns	void
+	 */
 	function add_constants()
 	{
 		require_once( dirname( __FILE__ ) . '/../../../wp-load.php' );
@@ -48,6 +60,11 @@ License: GPL2
 		}
 	}
 	
+	/**
+	 * Hook into wordpress methods
+	 *
+	 * @returns	void							
+	 */
 	function add_actions()
 	{
 		register_activation_hook( __FILE__, array('Social_connect','hook_activate') );
@@ -82,12 +99,22 @@ License: GPL2
 		add_action('admin_menu', 				array('SC_Admin', 'add_options_page') );
 	}
 	
+	/**
+	 * Load locale
+	 * 
+	 * @returns	void							
+	 */
 	function add_localization()
 	{
 		$plugin_dir = basename( dirname( __FILE__ ) );
 		load_plugin_textdomain( 'social_connect', null, "$plugin_dir/languages" );
 	}
 	
+	/**
+	 * Insert stylesheets
+	 * 
+	 * @returns	void							
+	 */
 	function add_stylesheets(){
 		if( !wp_style_is( 'social_connect', 'registered' ) )
 		{
@@ -107,6 +134,11 @@ License: GPL2
 		}
 	}
 	
+	/**
+	 * Insert admin stylesheets
+	 * 
+	 * @returns	void							
+	 */
 	function add_admin_stylesheets()
 	{
 		if( !wp_style_is( 'social_connect', 'registered' ) )
@@ -124,6 +156,11 @@ License: GPL2
 		}
 	}
 	
+	/**
+	 * Insert Javascript
+	 * 
+	 * @returns	void							
+	 */
 	function add_javascripts()
 	{
 		if( !wp_script_is( 'social_connect', 'registered' ) )
@@ -137,6 +174,11 @@ License: GPL2
 		wp_print_scripts( "social_connect" );
 	}
 	
+	/**
+	 * Activation hook, called when the plugin is enabled
+	 * 
+	 * @returns	void							
+	 */
 	function hook_activate()
 	{
 		/** 
@@ -163,18 +205,6 @@ License: GPL2
 			{
 				wp_die( sprintf( __( "Sorry, but you can not run Social Connect. It requires PHP 5.1.2 or newer. Please contact your web host and request they <a href='http://www.php.net/manual/en/migration5.php'>migrate</a> your PHP installation to run Social Connect.<br/><a href=\"%s\">Return to Plugins Admin page &raquo;</a>", 'social_connect'), admin_url( 'plugins.php' ) ), 'social-connect' );
 			}
-		}
-		
-		$file 				= preg_replace('/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR."/$2", __FILE__);
-		$this_plugin 		= plugin_basename(trim($file));
-		$active_plugins 	= get_option('active_plugins');
-		$key 				= array_search($this_plugin, $active_plugins);
-		
-		if ($key) // if it's 0 it's the first plugin already, no need to continue
-		{ 
-			array_splice($active_plugins, $key, 1);
-			array_unshift($active_plugins, $this_plugin);
-			update_option('active_plugins', $active_plugins);
 		}
 		
 		do_action( 'sc_activation' );

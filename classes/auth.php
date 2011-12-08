@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * Authentication class, handles login and registration
+ */
 class SC_Auth {
 	
+	/**
+	 * Redirect ajax logins to process_login with a flag to indicate ajax login
+	 * 
+	 * @returns	void							
+	 */
 	static function ajax_login()
 	{
 		if (
@@ -15,6 +23,13 @@ class SC_Auth {
 		}
 	}
 	
+	/**
+	 * Process user login
+	 * 
+	 * @param	bool			$is_ajax
+	 * 
+	 * @returns	void							
+	 */
 	static function process_login( $is_ajax = false )
 	{
 		$redirect_to = SC_Utils::redirect_to();
@@ -27,32 +42,27 @@ class SC_Auth {
 			return;
 		}
 		
-		// Cookies used to display welcome message if already signed in recently using some provider
-		setcookie(
-			"social_connect_current_provider",  // name
-			$social_connect_provider,           // value
-			time()+3600,                        // expire
-			SITECOOKIEPATH,                     // path
-			COOKIE_DOMAIN                       // domain 
-		);
-		
+		// Process login with the selected provider
 		$data 		= call_user_func(array($provider->class,'process_login'));
+		
+		// Check if the authenticated user already has an account
 		$user_id 	= SC_Utils::get_user_by_meta( $provider_identity_key, $data->provider_identity );
 		
-		if ( $user_id )
+		if ( $user_id ) // user already has an account
 		{
 			$user_data  = get_userdata( $user_id );
 			$user_login = $user_data->user_login;
 		}
-			// User not found by provider identity, check by email
+			// User already has an account but hasn't logged in with this provider before
 			elseif ( $user_id = email_exists( $data->email ) )
-		{ 
+		{
 			update_user_meta( $user_id, $provider_identity_key, $data->provider_identity );
 	
 			$user_data  = get_userdata( $user_id );
 			$user_login = $user_data->user_login;
 		}
-			else // Create new user and associate provider identity
+			// Create new user and associate provider identity
+			else 
 		{ 
 			$user_login = static::get_unique_username($data->user_login);
 	
@@ -65,9 +75,10 @@ class SC_Auth {
 				'user_pass'     => wp_generate_password()
 			);
 	
-			// Create a new user
+			// Add user to DB
 			$user_id = wp_insert_user( $user_create );
 	
+			// Validate that DB insert worked
 			if ( $user_id && is_integer( $user_id ) )
 			{
 				update_user_meta( $user_id, $provider_identity_key, $data->provider_identity );
@@ -78,10 +89,13 @@ class SC_Auth {
 			}
 		}
 	
+		// Authenticate the user 
 		wp_set_auth_cookie( $user_id );
 	
+		// Tell everyone about our accomplishment, woo!
 		do_action( 'social_connect_login', $user_login );
 	
+		// Notify the user depending on the request method
 		if ( $is_ajax )
 		{
 			echo '{"redirect":"' . $redirect_to . '"}';
@@ -94,12 +108,21 @@ class SC_Auth {
 		exit();
 	}
 	
+	/**
+	 * Get an available username
+	 * 
+	 * @param   string      $user_login
+	 * @param   int         $c
+	 * @returns string
+	 */
 	static function get_unique_username($user_login, $c = 1)
 	{
 		if ( username_exists( $user_login ) )
 		{
 			if ($c > 5)
 			{
+				// If we've already iterated 5 times, apply some more
+				// unique alterations so we don't overload the DB
 				$append = '_'.substr(uniqid(),-3);
 			}
 				else
@@ -107,8 +130,10 @@ class SC_Auth {
 				$append = $c;
 			}
 			
+			// Call filter in case a plugin wants to have a go at it
 			$user_login = apply_filters( 'social_connect_username_exists', $user_login . $append );
 			
+			// Call this function again to ensure the generate alteration is unique
 			return static::get_unique_username($user_login,++$c);
 		}
 			else

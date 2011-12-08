@@ -1,8 +1,16 @@
 <?php
 
+/**
+ * Admin class, handles the options page
+ */
 class SC_Admin
 {
 	
+	/**
+	 * Add the link to the options page, only if required by one of the providers
+	 * 
+	 * @returns	void
+	 */
 	static function add_options_page()
 	{
 		if (apply_filters('social_connect_enable_options_page', false))
@@ -11,6 +19,11 @@ class SC_Admin
 		}
 	}
 	
+	/**
+	 * Render the options page
+	 * 
+	 * @returns	void							
+	 */
 	static function render_options()
 	{
 		?>

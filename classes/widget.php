@@ -6,7 +6,10 @@
 class SC_Widget extends WP_Widget
 {
 	
-	/** constructor */
+	/**
+	 * Constructor
+	 * @returns	void							
+	 */
 	function __construct()
 	{
 		parent::WP_Widget(
@@ -18,7 +21,14 @@ class SC_Widget extends WP_Widget
 		);
 	}
 
-	/** This is rendered widget content */
+	/**
+	 * This is rendered widget content
+	 * 
+	 * @param   array           $args
+	 * @param   array           $instance
+	 * 
+	 * @returns void							
+	 */
 	function widget( $args, $instance )
 	{
 		extract( $args );
@@ -51,7 +61,14 @@ class SC_Widget extends WP_Widget
 		echo $after_widget;
 	}
 
-	/** Everything which should happen when user edit widget at admin panel */
+	/**
+	 * Everything which should happen when user edit widget at admin panel
+	 * 
+	 * @param   array           $new_instance	
+	 * @param   array           $old_instance
+	 * 
+	 * @returns array
+	 */
 	function update( $new_instance, $old_instance )
 	{
 		$instance                           = $old_instance;
@@ -63,7 +80,12 @@ class SC_Widget extends WP_Widget
 		return $instance;
 	}
 
-	/** Widget edit form at admin panel */
+	/**
+	 * Widget edit form at admin panel
+	 * 
+	 * @param   array           $instance		
+	 * @returns void							
+	 */
 	function form( $instance )
 	{
 		/* Set up default widget settings. */
