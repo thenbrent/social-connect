@@ -69,41 +69,41 @@ class SC_Utils {
 		return apply_filters( 'social_connect_redirect_to', $redirect_to );
 	}
 	
-	static function load_gateway($gateway, $method = false)
+	static function load_provider($provider, $method = false)
 	{
-		$gateway = strtolower($gateway);
+		$provider = strtolower($provider);
 		
-		$gateway = (object) array(
-			'gateway'   => trim($gateway),
-			'plugin'    => 'sc-gateway-' . $gateway . '/sc-gateway-' . $gateway . '.php',
-			'file'       => SOCIAL_CONNECT_PLUGIN_PATH . '/../sc-gateway-' . $gateway . '/sc-gateway-' . $gateway . '.php',
-			'class'     => 'SC_Gateway_' . ucfirst($gateway)
+		$provider = (object) array(
+			'provider'   => trim($provider),
+			'plugin'    => 'sc-provider-' . $provider . '/sc-provider-' . $provider . '.php',
+			'file'       => SOCIAL_CONNECT_PLUGIN_PATH . '/../sc-provider-' . $provider . '/sc-provider-' . $provider . '.php',
+			'class'     => 'SC_Provider_' . ucfirst($provider)
 		);
 		
 		$ap = (array) get_option( 'active_plugins', array() );
-		if ( !in_array($gateway->plugin,$ap))
+		if ( !in_array($provider->plugin,$ap))
 		{
 			return false;
 		}
 		
-		if ( !file_exists($gateway->file))
+		if ( !file_exists($provider->file))
 		{
 			return false;
 		}
 		
-		require_once $gateway->file;
+		require_once $provider->file;
 		
-		if ( !class_exists($gateway->class))
+		if ( !class_exists($provider->class))
 		{
 			return false;
 		}
 		
 		if ($method)
 		{
-			call_user_func(array($gateway->class,$method));
+			call_user_func(array($provider->class,$method));
 		}
 		
-		return $gateway;
+		return $provider;
 	}
 	
 }

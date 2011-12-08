@@ -22,7 +22,7 @@ class SC_Auth {
 		$social_connect_provider    = $_REQUEST[ 'social_connect_provider' ];
 		$provider_identity_key      = 'social_connect_' . $social_connect_provider . '_id';
 		
-		if ( ! $gateway = SC_Utils::load_gateway($social_connect_provider))
+		if ( ! $provider = SC_Utils::load_provider($social_connect_provider))
 		{
 			return;
 		}
@@ -36,7 +36,7 @@ class SC_Auth {
 			COOKIE_DOMAIN                       // domain 
 		);
 		
-		$data 		= call_user_func(array($gateway->class,'process_login'));
+		$data 		= call_user_func(array($provider->class,'process_login'));
 		$user_id 	= SC_Utils::get_user_by_meta( $provider_identity_key, $data->provider_identity );
 		
 		if ( $user_id )
@@ -59,7 +59,7 @@ class SC_Auth {
 			$user_create = array(
 				'user_login'    => $user_login,
 				'user_email'    => $data->email,
-				'first_name'     => $data->first_name,
+				'first_name'    => $data->first_name,
 				'last_name'     => $data->last_name,
 				'user_url'      => $data->profile_url,
 				'user_pass'     => wp_generate_password()

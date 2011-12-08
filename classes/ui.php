@@ -26,33 +26,6 @@ class SC_UI {
 		<?php
 	}
 	
-	static function add_comment_meta( $comment_id )
-	{
-		$social_connect_comment_via_provider = isset( $_POST['social_connect_comment_via_provider']) ? $_POST['social_connect_comment_via_provider'] : '';
-		
-		if ( $social_connect_comment_via_provider != '' )
-		{
-			update_comment_meta( $comment_id, 'social_connect_comment_via_provider', $social_connect_comment_via_provider );
-		}
-	}
-	
-	static function render_comment_meta( $link )
-	{
-		global $comment;
-		
-		$images_url = SOCIAL_CONNECT_PLUGIN_URL . '/media/img/';
-		$social_connect_comment_via_provider = get_comment_meta( $comment->comment_ID, 'social_connect_comment_via_provider', true );
-		
-		if ( $social_connect_comment_via_provider && current_user_can( 'manage_options' ))
-		{
-			return $link . '&nbsp;<img class="social_connect_comment_via_provider" alt="'.$social_connect_comment_via_provider.'" src="' . $images_url . $social_connect_comment_via_provider . '_16.png"  />';
-		}
-			else
-		{
-			return $link;
-		}
-	}
-	
 	static function render_comment_form()
 	{
 		if ( comments_open() && !is_user_logged_in())
@@ -66,7 +39,7 @@ class SC_UI {
 		echo '<input type="hidden" id="social_connect_login_form_uri" value="' . site_url( 'wp-login.php', 'login_post' ) . '" />';
 	}
 	
-	static function shortcode_handler( $args )
+	static function show_social_connect()
 	{
 		if( !is_user_logged_in())
 		{

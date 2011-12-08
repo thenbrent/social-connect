@@ -6,12 +6,12 @@ class SC_Call {
 	
 	function init()
 	{
-		if ( !isset($_GET['gateway']) OR !ctype_alpha(trim($_GET['gateway'])))
+		if ( !isset($_GET['provider']) OR !ctype_alpha(trim($_GET['provider'])))
 		{
 			return;
 		}
 		
-		SC_Utils::load_gateway($_GET['gateway'],'call');
+		SC_Utils::load_provider($_GET['provider'],'call');
 		
 	}
 	
