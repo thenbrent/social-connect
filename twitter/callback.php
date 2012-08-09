@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/wp-load.php');
+require_once(ABSPATH . '/wp-load.php');
 require_once(dirname(__FILE__) . '/EpiCurl.php' );
 require_once(dirname(__FILE__) . '/EpiOAuth.php' );
 require_once(dirname(__FILE__) . '/EpiTwitter.php' );
