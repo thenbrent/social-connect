@@ -1,7 +1,7 @@
 <?php
 
 function sc_render_login_form_social_connect( $args = NULL ) {
-
+if (get_option('users_can_register') == 1) { /* Only show if registry is open */
 	if( $args == NULL )
 		$display_label = true;
 	elseif ( is_array( $args ) )
@@ -60,7 +60,7 @@ function sc_render_login_form_social_connect( $args = NULL ) {
 	</div>
 </div> <!-- End of social_connect_ui div -->
 <?php
-}
+} } /* END get_option('users_can_register') */
 add_action( 'login_form',          'sc_render_login_form_social_connect', 10 );
 add_action( 'register_form',       'sc_render_login_form_social_connect', 10 );
 add_action( 'after_signup_form',   'sc_render_login_form_social_connect', 10 );
