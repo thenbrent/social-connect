@@ -1,5 +1,5 @@
 <?php
-
+if (!function_exist('sc_render_login_form_social_connect')) :
 function sc_render_login_form_social_connect( $args = NULL ) {
 
 	if( $args == NULL )
@@ -61,6 +61,8 @@ function sc_render_login_form_social_connect( $args = NULL ) {
 </div> <!-- End of social_connect_ui div -->
 <?php
 }
+endif; // function_exist
+
 add_action( 'login_form',          'sc_render_login_form_social_connect', 10 );
 add_action( 'register_form',       'sc_render_login_form_social_connect', 10 );
 add_action( 'after_signup_form',   'sc_render_login_form_social_connect', 10 );
