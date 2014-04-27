@@ -111,7 +111,7 @@ class Facebook
   public static $CURL_OPTS = array(
     CURLOPT_CONNECTTIMEOUT => 10,
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT        => 60,
+    CURLOPT_TIMEOUT        => 200,
     CURLOPT_USERAGENT      => 'facebook-php-2.0',
   );
 
