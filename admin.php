@@ -1,8 +1,9 @@
 <?php
 
 function sc_social_connect_admin_menu() {
-	add_options_page('Social Connect', 'Social Connect', 'manage_options', 'social-connect-id', 'sc_render_social_connect_settings' );
+	$hook = add_options_page('Social Connect', 'Social Connect', 'manage_options', 'social-connect-id', 'sc_render_social_connect_settings' );
 	add_action( 'admin_init', 'sc_register_social_connect_settings' );
+	add_action( 'load-'.$hook, 'sc_check_required_wp_settings' );
 }
 add_action('admin_menu', 'sc_social_connect_admin_menu' );
 
@@ -18,6 +19,12 @@ function sc_register_social_connect_settings() {
 	register_setting( 'social-connect-settings-group', 'social_connect_google_enabled' );
 	register_setting( 'social-connect-settings-group', 'social_connect_yahoo_enabled' );
 	register_setting( 'social-connect-settings-group', 'social_connect_wordpress_enabled' );
+}
+
+function sc_check_required_wp_settings() {
+	if (!get_option('users_can_register')) {
+		add_settings_error('sc-required-wp-settings', esc_attr('required-wp-settings'), sprintf(__('The "Anyone can register" setting must be enabled for this plugin to work.<br /><a href="%s">Click here to visit the General Settings</a>', 'social_connect'), get_admin_url('', 'options-general.php')), 'error');
+	}
 }
 
 function sc_render_social_connect_settings() {
