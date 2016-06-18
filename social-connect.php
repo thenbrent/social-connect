@@ -206,6 +206,8 @@ function sc_social_connect_process_login( $is_ajax = false ) {
 			break;
 	}
 
+	$user_login = apply_filters( 'social_connect_user_login', $user_login, $sc_email, $sc_first_name, $sc_last_name, $social_connect_provider );
+
 	// Cookies used to display welcome message if already signed in recently using some provider
 	setcookie("social_connect_current_provider", $social_connect_provider, time()+3600, SITECOOKIEPATH, COOKIE_DOMAIN, false, true );
 
