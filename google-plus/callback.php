@@ -21,12 +21,8 @@ if (isset($_GET['code'])) {
 		unset( $_SESSION['access_token'] );
 	}
 
-	if ( isset( $_SESSION['access_token'] ) && $_SESSION['access_token'] ) {
-		$client->setAccessToken( $_SESSION['access_token'] );
-	} elseif ( isset( $code ) ) {
-		$client->authenticate( $_GET['code'] );
-		$_SESSION['access_token'] = $client->getAccessToken();
-	}
+	$client->authenticate( $_GET['code'] );
+	$_SESSION['access_token'] = $client->getAccessToken();
 
 	$token = json_decode( $client->getAccessToken() );
 
